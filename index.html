@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>VueView</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.22/vue.js"></script>
+    <script>
+        'use strict';
+
+        window.addEventListener('DOMContentLoaded', () => {
+            Vue.component('silly-message', {
+                template: `
+                <div>
+                    <h1>Hi {{ user.name }}!</h1>
+                    <h3>You are {{ user.age }}</h3>
+                </div>
+                `,
+                props: ['user'],
+            });
+            
+            new Vue({
+                el: 'main',
+                data() {
+                    return {
+                        user: {},
+                        users: [
+                            {
+                                name: 'Tom',
+                                age: 16,
+                            },
+                            {
+                                name: 'Joe',
+                                age: 14,
+                            }
+                        ],
+                    };
+                },
+                mounted() {
+                    const {random} = Math;
+                    const {users} = this;
+                    this.user = users[random() * users.length | 0];
+                }
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <main>
+        <silly-message v-bind:user="user"></silly-message>
+    </main>
+</body>
+
+</html>
